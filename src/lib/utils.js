@@ -3,7 +3,6 @@ const CryptoJS = require('crypto');
 const path =  require('path');
 const fs = require('fs');
 const uuid =  require('uuid');
-const { getConfig } = require('./config');
 const { version } =  require('../../package.json');
 
 function sign(text, secret, outputType = 'base64') {
@@ -14,7 +13,7 @@ function sign(text, secret, outputType = 'base64') {
 }
 
 function auth(ApiKey, method, url, data) {
-  const { authVersion } = getConfig();
+  const authVersion = 2;
   const timestamp = Date.now();
   const signature = sign(timestamp + method.toUpperCase() + url + data, ApiKey.secret);
   const returnData = {
@@ -86,7 +85,7 @@ function checkL2BufferContinue(arrBuffer = [], lastSeq) {
     if (arrBuffer[0].sequenceStart !== lastSeq +1) {
       return false;
     }
-    
+
     for (let i = 0; i < arrBuffer.length; i++) {
       if (arrBuffer[i + 1] && arrBuffer[i + 1].sequenceStart !== arrBuffer[i].sequenceEnd + 1) {
         return false;

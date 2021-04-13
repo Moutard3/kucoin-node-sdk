@@ -6,7 +6,7 @@ const Http = require('../../lib/http');
  * @description This interface is for the basic fee rate of users.
  * @return {Object} { code, success, data }
  */
-exports.getBasicUserFee = async function getBasicUserFee() {
+exports.getBasicUserFee = async function getBasicUserFee({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -16,7 +16,7 @@ exports.getBasicUserFee = async function getBasicUserFee() {
     }
   }
   */
-  return await Http().GET('/api/v1/base-fee');
+  return await Http({key, secret, passphrase}).GET('/api/v1/base-fee');
 };
 
 /**
@@ -25,7 +25,7 @@ exports.getBasicUserFee = async function getBasicUserFee() {
  * @param {string} symbols - Trading pair (optional, you can inquire fee rates of 10 trading pairs each time at most) . exp: BTC-USDT,KCS-USDT
  * @return {Object} { code, success, data }
  */
-exports.getActualFeeRateBySymbols = async function getActualFeeRateBySymbols(symbols) {
+exports.getActualFeeRateBySymbols = async function getActualFeeRateBySymbols({key, secret, passphrase}, symbols) {
   /*
   {
     "code": "200000",     
@@ -43,5 +43,5 @@ exports.getActualFeeRateBySymbols = async function getActualFeeRateBySymbols(sym
     ]
   }
   */
-  return await Http().GET('/api/v1/trade-fees', { symbols });
+  return await Http({key, secret, passphrase}).GET('/api/v1/trade-fees', { symbols });
 };

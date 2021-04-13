@@ -7,7 +7,7 @@ const Http = require('../../lib/http');
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getLevel2_20 = async function getLevel2_20(symbol) {
+exports.getLevel2_20 = async function getLevel2_20({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -21,7 +21,7 @@ exports.getLevel2_20 = async function getLevel2_20(symbol) {
     }
   }
   */
-  return await Http().GET('/api/v1/market/orderbook/level2_20', { symbol });
+  return await Http({key, secret, passphrase}).GET('/api/v1/market/orderbook/level2_20', { symbol });
 };
 
 /**
@@ -30,7 +30,7 @@ exports.getLevel2_20 = async function getLevel2_20(symbol) {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getLevel2_100 = async function getLevel2_100(symbol) {
+exports.getLevel2_100 = async function getLevel2_100({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -44,7 +44,7 @@ exports.getLevel2_100 = async function getLevel2_100(symbol) {
     }
   }
   */
-  return await Http().GET('/api/v1/market/orderbook/level2_100', { symbol });
+  return await Http({key, secret, passphrase}).GET('/api/v1/market/orderbook/level2_100', { symbol });
 };
 
 
@@ -54,7 +54,7 @@ exports.getLevel2_100 = async function getLevel2_100(symbol) {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getLevel2_full = async function getLevel2_full(symbol) {
+exports.getLevel2_full = async function getLevel2_full({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -68,7 +68,7 @@ exports.getLevel2_full = async function getLevel2_full(symbol) {
     }
   }
   */
-  return await Http().GET('/api/v2/market/orderbook/level2', { symbol });
+  return await Http({key, secret, passphrase}).GET('/api/v2/market/orderbook/level2', { symbol });
 };
 
 
@@ -79,7 +79,7 @@ exports.getLevel2_full = async function getLevel2_full(symbol) {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-// exports.getLevel3_full_v1 = async function getLevel3_full_v1(symbol) {
+// exports.getLevel3_full_v1 = async function getLevel3_full_v1({key, secret, passphrase}, symbol) {
 //   /*
 //   {
 //     "code": "200000",     
@@ -117,7 +117,7 @@ exports.getLevel2_full = async function getLevel2_full(symbol) {
 //     }
 //   }
 //   */
-//   return await Http().GET('/api/v1/market/orderbook/level3', { symbol });
+//   return await Http({key, secret, passphrase}).GET('/api/v1/market/orderbook/level3', { symbol });
 // };
 
 
@@ -127,7 +127,7 @@ exports.getLevel2_full = async function getLevel2_full(symbol) {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getLevel3_full = async function getLevel3_full(symbol) {
+exports.getLevel3_full = async function getLevel3_full({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -165,6 +165,6 @@ exports.getLevel3_full = async function getLevel3_full(symbol) {
     }
   }
   */
-  return await Http().GET('/api/v2/market/orderbook/level3', { symbol });
+  return await Http({key, secret, passphrase}).GET('/api/v2/market/orderbook/level3', { symbol });
 };
 

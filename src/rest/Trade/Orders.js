@@ -30,7 +30,7 @@ const Http = require('../../lib/http');
  *   - {string} funds [Optional] - The desired amount of quote currency to use
  * @return {Object} { code, success, data }
  */
-exports.postOrder = async function postOrder(baseParams = {}, orderParams = {}) {
+exports.postOrder = async function postOrder({key, secret, passphrase}, baseParams = {}, orderParams = {}) {
   /*
   {
     "code": "200000",     
@@ -39,7 +39,7 @@ exports.postOrder = async function postOrder(baseParams = {}, orderParams = {}) 
     }
   }
   */
-  return await Http().POST('/api/v1/orders', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/orders', {
     ...baseParams,
     ...orderParams,
   });
@@ -68,7 +68,7 @@ exports.postOrder = async function postOrder(baseParams = {}, orderParams = {}) 
  *   - {string} visibleSize - [Optional] The maximum visible size of an iceberg order
  * @return {Object} { code, success, data }
  */
-exports.postMultiOrders = async function postMultiOrders(param = {}) {
+exports.postMultiOrders = async function postMultiOrders({key, secret, passphrase}, param = {}) {
   /*
   {
     "code": "200000",     
@@ -101,7 +101,7 @@ exports.postMultiOrders = async function postMultiOrders(param = {}) {
     } 
   }
   */
-  return await Http().POST('/api/v1/orders/multi', { ...param });
+  return await Http({key, secret, passphrase}).POST('/api/v1/orders/multi', { ...param });
 };
 
 /**
@@ -110,7 +110,7 @@ exports.postMultiOrders = async function postMultiOrders(param = {}) {
  * @param {string} orderId - Order ID, unique ID of the order.
  * @return {Object} { code, success, data }
  */
-exports.cancelOrder = async function cancelOrder(orderId) {
+exports.cancelOrder = async function cancelOrder({key, secret, passphrase}, orderId) {
   /*
   {
     "code": "200000",     
@@ -121,7 +121,7 @@ exports.cancelOrder = async function cancelOrder(orderId) {
     }
   }
   */
-  return await Http().DEL(`/api/v1/orders/${orderId}`);
+  return await Http({key, secret, passphrase}).DEL(`/api/v1/orders/${orderId}`);
 };
 
 /**
@@ -145,7 +145,7 @@ exports.cancelAllOrders = async function cancelAllOrders({ symbol, tradeType } =
     }
   }
   */
-  return await Http().DEL('/api/v1/orders', {
+  return await Http({key, secret, passphrase}).DEL('/api/v1/orders', {
     symbol,
     tradeType,
   });
@@ -168,7 +168,7 @@ exports.cancelOrderByClientOid = async function cancelOrderByClientOid({ symbol,
     }
   }
   */
-  return await Http().DEL(`/api/v1/order/client-order/${clientOid}`);
+  return await Http({key, secret, passphrase}).DEL(`/api/v1/order/client-order/${clientOid}`);
 };
 
 /**
@@ -184,7 +184,7 @@ exports.cancelOrderByClientOid = async function cancelOrderByClientOid({ symbol,
  *   - {number} endAt - [Optional] End time (milisecond)
  * @return {Object} { code, success, data }
  */
-exports.getOrdersList = async function getOrdersList(tradeType, optional = {}) {
+exports.getOrdersList = async function getOrdersList({key, secret, passphrase}, tradeType, optional = {}) {
   /*
   {
     "code": "200000",     
@@ -230,7 +230,7 @@ exports.getOrdersList = async function getOrdersList(tradeType, optional = {}) {
     }
   }
   */
-  return await Http().GET('/api/v1/orders', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/orders', {
     tradeType,
     ...optional,
   });
@@ -250,7 +250,7 @@ exports.getOrdersList = async function getOrdersList(tradeType, optional = {}) {
  *   - {string} side - [Optional] buy or sell
  * @return {Object} { code, success, data }
  */
-exports.getV1HistoricalOrdersList = async function getV1HistoricalOrdersList(params = {}) {
+exports.getV1HistoricalOrdersList = async function getV1HistoricalOrdersList({key, secret, passphrase}, params = {}) {
   /*
   {
     "code": "200000",     
@@ -271,7 +271,7 @@ exports.getV1HistoricalOrdersList = async function getV1HistoricalOrdersList(par
     }
   }
   */
-  return await Http().GET('/api/v1/hist-orders', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/hist-orders', {
     ...params,
   });
 };
@@ -281,7 +281,7 @@ exports.getV1HistoricalOrdersList = async function getV1HistoricalOrdersList(par
  * @description Recent Orders. Request via this endpoint to get 1000 orders in the last 24 hours.
  * @return {Object} { code, success, data }
  */
-exports.getRecentOrders = async function getRecentOrders() {
+exports.getRecentOrders = async function getRecentOrders({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -327,7 +327,7 @@ exports.getRecentOrders = async function getRecentOrders() {
     }
   }
   */
-  return await Http().GET('/api/v1/limit/orders');
+  return await Http({key, secret, passphrase}).GET('/api/v1/limit/orders');
 };
 
 /**
@@ -336,7 +336,7 @@ exports.getRecentOrders = async function getRecentOrders() {
  * @param {string} orderId - Order ID, unique identifier of an order, obtained via the List orders.
  * @return {Object} { code, success, data }
  */
-exports.getOrderByID = async function getOrderByID(orderId) {
+exports.getOrderByID = async function getOrderByID({key, secret, passphrase}, orderId) {
   /*
   {
     "code": "200000",     
@@ -374,7 +374,7 @@ exports.getOrderByID = async function getOrderByID(orderId) {
     }
   }
   */
-  return await Http().GET(`/api/v1/orders/${orderId}`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/orders/${orderId}`);
 };
 
 /**
@@ -383,7 +383,7 @@ exports.getOrderByID = async function getOrderByID(orderId) {
  * @param {string} clientOid - Unique order id created by users to identify their orders
  * @return {Object} { code, success, data }
  */
-exports.getSingleActiveOrderByClientOid = async function getSingleActiveOrderByClientOid(clientOid) {
+exports.getSingleActiveOrderByClientOid = async function getSingleActiveOrderByClientOid({key, secret, passphrase}, clientOid) {
   /*
   {
     "code": "200000",     
@@ -421,5 +421,5 @@ exports.getSingleActiveOrderByClientOid = async function getSingleActiveOrderByC
     }
   }
   */
-  return await Http().GET(`/api/v1/order/client-order/${clientOid}`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/order/client-order/${clientOid}`);
 };

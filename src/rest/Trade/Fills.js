@@ -14,7 +14,7 @@ const Http = require('../../lib/http');
  *   - {number} endAt - [Optional] End time (milisecond)
  * @return {Object} { code, success, data }
  */
-exports.getFillsList = async function getFillsList(tradeType, optional = {}) {
+exports.getFillsList = async function getFillsList({key, secret, passphrase}, tradeType, optional = {}) {
   /*
   {
     "code": "200000",     
@@ -47,7 +47,7 @@ exports.getFillsList = async function getFillsList(tradeType, optional = {}) {
     }
   }
   */
-  return await Http().GET('/api/v1/fills', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/fills', {
     tradeType,
     ...optional,
   });
@@ -58,7 +58,7 @@ exports.getFillsList = async function getFillsList(tradeType, optional = {}) {
  * @description Recent Fills. Request via this endpoint to get a list of 1000 fills in the last 24 hours.
  * @return {Object} { code, success, data }
  */
-exports.getRecentFills = async function getRecentFills() {
+exports.getRecentFills = async function getRecentFills({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -85,5 +85,5 @@ exports.getRecentFills = async function getRecentFills() {
     ]
   }
   */
-  return await Http().GET('/api/v1/limit/fills');
+  return await Http({key, secret, passphrase}).GET('/api/v1/limit/fills');
 };

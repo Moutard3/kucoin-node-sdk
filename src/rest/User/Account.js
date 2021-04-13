@@ -8,16 +8,16 @@ const Http = require('../../lib/http');
  * @param {string} currency - currency https://sandbox-docs.kucoin.com/#get-currencies
  * @return {Object} { code, success, data }
  */
-exports.createAccount = async function createAccount(type, currency) {
+exports.createAccount = async function createAccount({key, secret, passphrase}, type, currency) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
       "id": "5bd6e9286d99522a52e458de"  //accountId
     }
   }
   */
-  return await Http().POST('/api/v1/accounts', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/accounts', {
     type,
     currency,
   });
@@ -31,10 +31,10 @@ exports.createAccount = async function createAccount(type, currency) {
  *   - {string} currency - [Optional] currency https://sandbox-docs.kucoin.com/#get-currencies
  * @return {Object} { code, success, data }
  */
-exports.getAccountsList = async function getAccountsList({ type, currency } = {}) {
+exports.getAccountsList = async function getAccountsList({key, secret, passphrase}, { type, currency } = {}) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": [{
         "id": "5bd6e9286d99522a52e458de",  //accountId
         "currency": "BTC",  //Currency
@@ -53,7 +53,7 @@ exports.getAccountsList = async function getAccountsList({ type, currency } = {}
     }]
   }
   */
-  return await Http().GET('/api/v1/accounts', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/accounts', {
     type,
     currency,
   });
@@ -65,10 +65,10 @@ exports.getAccountsList = async function getAccountsList({ type, currency } = {}
  * @param {string} accountId - ID of the account
  * @return {Object} { code, success, data }
  */
-exports.getAccountInformation = async function getAccountInformation(accountId) {
+exports.getAccountInformation = async function getAccountInformation({key, secret, passphrase}, accountId) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
         "currency": "KCS",  //Currency
         "balance": "1000000060.6299",  //Total assets of a currency
@@ -77,7 +77,7 @@ exports.getAccountInformation = async function getAccountInformation(accountId) 
     }
   }
   */
-  return await Http().GET(`/api/v1/accounts/${accountId}`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/accounts/${accountId}`);
 };
 
 /**
@@ -91,7 +91,7 @@ exports.getAccountInformation = async function getAccountInformation(accountId) 
  *   - {number} endAt - [Optional] End time (milisecond)
  * @return {Object} { code, success, data }
  */
-exports.getAccountLedgers = async function getAccountLedgers(
+exports.getAccountLedgers = async function getAccountLedgers({key, secret, passphrase},
   {
     currency,
     direction,
@@ -102,7 +102,7 @@ exports.getAccountLedgers = async function getAccountLedgers(
 ) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
       "currentPage": 1,
       "pageSize": 10,
@@ -159,7 +159,7 @@ exports.getAccountLedgers = async function getAccountLedgers(
     }
   }
   */
-  return await Http().GET(`/api/v1/accounts/ledgers`, {
+  return await Http({key, secret, passphrase}).GET(`/api/v1/accounts/ledgers`, {
     currency,
     direction,
     bizType,
@@ -174,10 +174,10 @@ exports.getAccountLedgers = async function getAccountLedgers(
  * @param {string} accountId - ID of the account.
  * @return {Object} { code, success, data }
  */
-exports.getHolds = async function getHolds(accountId) {
+exports.getHolds = async function getHolds({key, secret, passphrase}, accountId) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
         "currentPage": 1,
         "pageSize": 10,
@@ -188,7 +188,7 @@ exports.getHolds = async function getHolds(accountId) {
                 "currency": "ETH",  //Currency
                 "holdAmount": "5083",  //Hold amount of a currency
                 "bizType": "Withdraw",     //business type
-                "orderId": "5bc7f080b39c5c03286eef8e", // ID of funds freezed order 
+                "orderId": "5bc7f080b39c5c03286eef8e", // ID of funds freezed order
                 "createdAt": 1545898567000, //Creation time
                 "updatedAt": 1545898567000。//update time
             },
@@ -204,7 +204,7 @@ exports.getHolds = async function getHolds(accountId) {
     }
   }
   */
-  return await Http().GET(`/api/v1/accounts/${accountId}/holds`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/accounts/${accountId}/holds`);
 };
 
 /**
@@ -213,12 +213,12 @@ exports.getHolds = async function getHolds(accountId) {
  * @param {string} subUserId - the user ID of a sub-account.
  * @return {Object} { code, success, data }
  */
-exports.getBalanceOfSubAccount = async function getBalanceOfSubAccount(subUserId) {
+exports.getBalanceOfSubAccount = async function getBalanceOfSubAccount({key, secret, passphrase}, subUserId) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
-        "subUserId": "5caefba7d9575a0688f83c45", 
+        "subUserId": "5caefba7d9575a0688f83c45",
         "subName": "sdfgsdfgsfd",
         "mainAccounts": [{
             "currency": "BTC",
@@ -250,7 +250,7 @@ exports.getBalanceOfSubAccount = async function getBalanceOfSubAccount(subUserId
     }
   }
   */
-  return await Http().GET(`/api/v1/sub-accounts/${subUserId}`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/sub-accounts/${subUserId}`);
 };
 
 /**
@@ -258,10 +258,10 @@ exports.getBalanceOfSubAccount = async function getBalanceOfSubAccount(subUserId
  * @description Get the Aggregated Balance of all Sub-Accounts.
  * @return {Object} { code, success, data }
  */
-exports.getAggregatedBalanceOfAllSubAccounts = async function getAggregatedBalanceOfAllSubAccounts() {
+exports.getAggregatedBalanceOfAllSubAccounts = async function getAggregatedBalanceOfAllSubAccounts({key, secret, passphrase}) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": [
       {
             "subUserId": "5caefba7d9575a0688f83c45",
@@ -297,7 +297,7 @@ exports.getAggregatedBalanceOfAllSubAccounts = async function getAggregatedBalan
     ]
   }
   */
-  return await Http().GET('/api/v1/sub-accounts');
+  return await Http({key, secret, passphrase}).GET('/api/v1/sub-accounts');
 };
 
 /**
@@ -307,10 +307,10 @@ exports.getAggregatedBalanceOfAllSubAccounts = async function getAggregatedBalan
  * @param {string} currency - currency https://sandbox-docs.kucoin.com/#Get-Currencies
  * @return {Object} { code, success, data }
  */
-exports.getTransferable = async function getTransferable(type, currency) {
+exports.getTransferable = async function getTransferable({key, secret, passphrase}, type, currency) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data":  {
         "currency": "KCS",
         "balance": "0",
@@ -320,7 +320,7 @@ exports.getTransferable = async function getTransferable(type, currency) {
     }
   }
   */
-  return await Http().GET('/api/v1/accounts/transferable', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/accounts/transferable', {
     currency,
     type,
   });
@@ -339,7 +339,7 @@ exports.getTransferable = async function getTransferable(type, currency) {
  *   - {string} subAccountType - [Optional] The account type of the sub user: MAIN, TRADE or MARGIN, default is MAIN.
  * @return {Object} { code, success, data }
  */
-exports.transferBetweenMasterUserAndSubUser = async function transferBetweenMasterUserAndSubUser(
+exports.transferBetweenMasterUserAndSubUser = async function transferBetweenMasterUserAndSubUser({key, secret, passphrase},
   clientOid,
   currency,
   amount,
@@ -352,13 +352,13 @@ exports.transferBetweenMasterUserAndSubUser = async function transferBetweenMast
 ) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
         "orderId": "5cbd870fd9575a18e4438b9a"
     }
   }
   */
-  return await Http().POST('/api/v2/accounts/sub-transfer', {
+  return await Http({key, secret, passphrase}).POST('/api/v2/accounts/sub-transfer', {
     clientOid,
     currency,
     amount,
@@ -379,7 +379,7 @@ exports.transferBetweenMasterUserAndSubUser = async function transferBetweenMast
  * @param {string} amount - Transfer amount, the amount is a positive integer multiple of the currency precision.
  * @return {Object} { code, success, data }
  */
-exports.innerTransfer = async function innerTransfer(
+exports.innerTransfer = async function innerTransfer({key, secret, passphrase},
   clientOid,
   currency,
   from,
@@ -388,13 +388,13 @@ exports.innerTransfer = async function innerTransfer(
 ) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
         "orderId": "5bd6e9286d99522a52e458de"
     }
   }
   */
-  return await Http().POST('/api/v2/accounts/inner-transfer', {
+  return await Http({key, secret, passphrase}).POST('/api/v2/accounts/inner-transfer', {
     clientOid,
     currency,
     from,

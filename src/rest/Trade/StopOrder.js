@@ -30,7 +30,7 @@ const Http = require('../../lib/http');
  *   - {string} funds - [Optional] The desired amount of quote currency to use
  * @return {Object} { code, success, data }
  */
-exports.postStopOrder = async function postStopOrder(baseParams = {}, orderParams = {}) {
+exports.postStopOrder = async function postStopOrder({key, secret, passphrase}, baseParams = {}, orderParams = {}) {
   /*
   {
     "code": "200000",     
@@ -39,7 +39,7 @@ exports.postStopOrder = async function postStopOrder(baseParams = {}, orderParam
     }
   }
   */
-  return await Http().POST('/api/v1/stop-order', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/stop-order', {
     ...baseParams,
     ...orderParams,
   });
@@ -53,7 +53,7 @@ exports.postStopOrder = async function postStopOrder(baseParams = {}, orderParam
  * @param {string} orderId - Path parameter, Order ID, unique ID of the order.
  * @return {Object} { code, success, data }
  */
-exports.cancelOrder = async function cancelOrder(symbol, orderId) {
+exports.cancelOrder = async function cancelOrder({key, secret, passphrase}, symbol, orderId) {
   /*
   {
     "code": "200000",     
@@ -64,7 +64,7 @@ exports.cancelOrder = async function cancelOrder(symbol, orderId) {
     }
   }
   */
-  return await Http().DEL(`/api/v1/stop-order/${symbol}/${orderId}`);
+  return await Http({key, secret, passphrase}).DEL(`/api/v1/stop-order/${symbol}/${orderId}`);
 };
 
 
@@ -77,7 +77,7 @@ exports.cancelOrder = async function cancelOrder(symbol, orderId) {
  * @param {string} orderIds - [Optional] designated order ID. You can specify multiple IDs and separate them with commas
  * @return {Object} { code, success, data }
  */
-exports.cancelMultiOrders = async function cancelMultiOrders(symbol, tradeType, orderIds) {
+exports.cancelMultiOrders = async function cancelMultiOrders({key, secret, passphrase}, symbol, tradeType, orderIds) {
   /*
   {
     "code": "200000",     
@@ -88,7 +88,7 @@ exports.cancelMultiOrders = async function cancelMultiOrders(symbol, tradeType, 
     }
   }
   */
-  return await Http().DEL('/api/v1/stop-order/cancel', {
+  return await Http({key, secret, passphrase}).DEL('/api/v1/stop-order/cancel', {
     symbol,
     tradeType,
     orderIds,
@@ -103,7 +103,7 @@ exports.cancelMultiOrders = async function cancelMultiOrders(symbol, tradeType, 
  * @param {string} orderId - Order ID, unique identifier of an order, obtained via the List orders.
  * @return {Object} { code, success, data }
  */
-exports.getOrder = async function getOrder(symbol, orderId) {
+exports.getOrder = async function getOrder({key, secret, passphrase}, symbol, orderId) {
   /*
   {
     "code": "200000",     
@@ -111,7 +111,7 @@ exports.getOrder = async function getOrder(symbol, orderId) {
     }
   }
   */
-  return await Http().GET(`/api/v1/stop-order/${symbol}/${orderId}`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/stop-order/${symbol}/${orderId}`);
 };
 
 
@@ -130,7 +130,7 @@ exports.getOrder = async function getOrder(symbol, orderId) {
  *   - {number} pageSize - [Optional] Page Size
  * @return {Object} { code, success, data }
  */
-exports.getStopOrderList = async function getStopOrderList(params = {}) {
+exports.getStopOrderList = async function getStopOrderList({key, secret, passphrase}, params = {}) {
   /*
   {
     "code": "200000",     
@@ -138,7 +138,7 @@ exports.getStopOrderList = async function getStopOrderList(params = {}) {
     }
   }
   */
-  return await Http().GET('/api/v1/stop-order', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/stop-order', {
     ...params,
   });
 };
@@ -151,7 +151,7 @@ exports.getStopOrderList = async function getStopOrderList(params = {}) {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getOrderByClientOid = async function getOrderByClientOid(clientOid, symbol) {
+exports.getOrderByClientOid = async function getOrderByClientOid({key, secret, passphrase}, clientOid, symbol) {
   /*
   {
     "code": "200000",     
@@ -159,7 +159,7 @@ exports.getOrderByClientOid = async function getOrderByClientOid(clientOid, symb
     }
   }
   */
-  return await Http().GET('/api/v1/stop-order/queryOrderByClientOid', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/stop-order/queryOrderByClientOid', {
     clientOid,
     symbol,
   });
@@ -173,7 +173,7 @@ exports.getOrderByClientOid = async function getOrderByClientOid(clientOid, symb
  * @param {string} symbol - [Optional] Unique order id created by users to identify their orders
  * @return {Object} { code, success, data }
  */
-exports.cancelSingleOrderByClientOid = async function cancelSingleOrderByClientOid(clientOid, symbol) {
+exports.cancelSingleOrderByClientOid = async function cancelSingleOrderByClientOid({key, secret, passphrase}, clientOid, symbol) {
   /*
   {
     "code": "200000",     
@@ -181,7 +181,7 @@ exports.cancelSingleOrderByClientOid = async function cancelSingleOrderByClientO
     }
   }
   */
-  return await Http().DEL('/api/v1/stop-order/cancelOrderByClientOid', {
+  return await Http({key, secret, passphrase}).DEL('/api/v1/stop-order/cancelOrderByClientOid', {
     clientOid,
     symbol,
   });

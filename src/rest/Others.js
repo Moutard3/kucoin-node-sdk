@@ -6,7 +6,7 @@ const Http = require('../lib/http');
  * @description Get the server time.
  * @return {Object} { code, success, data }
  */
-exports.getTimestamp = async function getTimestamp() {
+exports.getTimestamp = async function getTimestamp({key, secret, passphrase}) {
   /*
   {
     "code":"200000",
@@ -14,7 +14,7 @@ exports.getTimestamp = async function getTimestamp() {
     "data":1546837113087
   }
   */
-  return await Http().GET('/api/v1/timestamp');
+  return await Http({key, secret, passphrase}).GET('/api/v1/timestamp');
 };
 
 /**
@@ -22,15 +22,15 @@ exports.getTimestamp = async function getTimestamp() {
  * @description Get the service status.
  * @return {Object} { code, success, data }
  */
-exports.getStatus = async function getStatus() {
+exports.getStatus = async function getStatus({key, secret, passphrase}) {
   /*
   {
-    "code": "200000",     
+    "code": "200000",
     "data": {
       "status": "open",                //open, close, cancelonly
       "msg":  "upgrade match engine"   //remark for operation
     }
   }
   */
-  return await Http().GET('/api/v1/status');
+  return await Http({key, secret, passphrase}).GET('/api/v1/status');
 };

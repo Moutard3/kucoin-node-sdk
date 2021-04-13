@@ -42,7 +42,7 @@ exports.getWithdrawalsList = async function getWithdrawalsList({
     }
   }
   */
-  return await Http().GET('/api/v1/withdrawals', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/withdrawals', {
     currency,
     status,
     startAt,
@@ -91,7 +91,7 @@ exports.getV1HistoricalWithdrawalsList = async function getV1HistoricalWithdrawa
     }
   }
   */
-  return await Http().GET('/api/v1/hist-withdrawals', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/hist-withdrawals', {
     currentPage,
     pageSize,
     currency,
@@ -110,7 +110,7 @@ exports.getV1HistoricalWithdrawalsList = async function getV1HistoricalWithdrawa
  *  - {string} chain - [Optional] The chain name of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20, default is ERC20. This only apply for multi-chain currency, and there is no need for single chain currency.
  * @return {Object} { code, success, data }
  */
-exports.getWithdrawalQuotas = async function getWithdrawalQuotas(currency, {
+exports.getWithdrawalQuotas = async function getWithdrawalQuotas({key, secret, passphrase}, currency, {
   chain,
 } = {}) {
   /*
@@ -132,7 +132,7 @@ exports.getWithdrawalQuotas = async function getWithdrawalQuotas(currency, {
     }
   }
   */
-  return await Http().GET('/api/v1/withdrawals/quotas', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/withdrawals/quotas', {
     currency,
     chain,
   });
@@ -151,7 +151,7 @@ exports.getWithdrawalQuotas = async function getWithdrawalQuotas(currency, {
  *  - {string} chain - [Optional] The chain name of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20, default is ERC20. This only apply for multi-chain currency, and there is no need for single chain currency.
  * @return {Object} { code, success, data }
  */
-exports.applyWithdraw = async function applyWithdraw(currency, address, amount, {
+exports.applyWithdraw = async function applyWithdraw({key, secret, passphrase}, currency, address, amount, {
   memo,
   isInner,
   remark,
@@ -165,7 +165,7 @@ exports.applyWithdraw = async function applyWithdraw(currency, address, amount, 
     }
   }
   */
-  return await Http().POST('/api/v1/withdrawals', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/withdrawals', {
     currency,
     address,
     amount,
@@ -182,11 +182,11 @@ exports.applyWithdraw = async function applyWithdraw(currency, address, amount, 
  * @param {string} withdrawalId - Path parameter, a unique ID for a withdrawal order
  * @return {Object} { code, success, data }
  */
-exports.cancelWithdrawal = async function cancelWithdrawal(withdrawalId) {
+exports.cancelWithdrawal = async function cancelWithdrawal({key, secret, passphrase}, withdrawalId) {
   /*
   {
     "code": "200000",
   }
   */
-  return await Http().DEL(`/api/v1/withdrawals/${withdrawalId}`);
+  return await Http({key, secret, passphrase}).DEL(`/api/v1/withdrawals/${withdrawalId}`);
 };

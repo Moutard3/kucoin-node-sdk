@@ -6,7 +6,7 @@ const Http = require('../../lib/http');
  * @description Get User Info of all Sub-Accounts.
  * @return {Object} { code, success, data }
  */
-exports.getSubUsers = async function getSubUsers() {
+exports.getSubUsers = async function getSubUsers({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -22,5 +22,5 @@ exports.getSubUsers = async function getSubUsers() {
     }]
   }
   */
-  return await Http().GET('/api/v1/sub/user');
+  return await Http({key, secret, passphrase}).GET('/api/v1/sub/user');
 };

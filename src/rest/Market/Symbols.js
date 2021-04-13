@@ -7,7 +7,7 @@ const Http = require('../../lib/http');
  * @param {string} market - [Optional] The trading market.
  * @return {Object} { code, success, data }
  */
-exports.getSymbolsList = async function getSymbolsList(market) {
+exports.getSymbolsList = async function getSymbolsList({key, secret, passphrase}, market) {
   /*
   {
     "code": "200000",     
@@ -32,7 +32,7 @@ exports.getSymbolsList = async function getSymbolsList(market) {
     ]
   }
   */
-  return await Http().GET('/api/v1/symbols', { market });
+  return await Http({key, secret, passphrase}).GET('/api/v1/symbols', { market });
 };
 
 /**
@@ -41,7 +41,7 @@ exports.getSymbolsList = async function getSymbolsList(market) {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getTicker = async function getTicker(symbol) {
+exports.getTicker = async function getTicker({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -57,7 +57,7 @@ exports.getTicker = async function getTicker(symbol) {
     }
   }
   */
-  return await Http().GET('/api/v1/market/orderbook/level1', { symbol });
+  return await Http({key, secret, passphrase}).GET('/api/v1/market/orderbook/level1', { symbol });
 };
 
 /**
@@ -65,7 +65,7 @@ exports.getTicker = async function getTicker(symbol) {
  * @description Get All Tickers
  * @return {Object} { code, success, data }
  */
-exports.getAllTickers = async function getAllTickers() {
+exports.getAllTickers = async function getAllTickers({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -95,7 +95,7 @@ exports.getAllTickers = async function getAllTickers() {
     }
   }
   */
-  return await Http().GET('/api/v1/market/allTickers');
+  return await Http({key, secret, passphrase}).GET('/api/v1/market/allTickers');
 };
 
 /**
@@ -104,7 +104,7 @@ exports.getAllTickers = async function getAllTickers() {
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.get24hrStats = async function get24hrStats(symbol) {
+exports.get24hrStats = async function get24hrStats({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -128,7 +128,7 @@ exports.get24hrStats = async function get24hrStats(symbol) {
     }
   }
   */
-  return await Http().GET('/api/v1/market/stats', { symbol });
+  return await Http({key, secret, passphrase}).GET('/api/v1/market/stats', { symbol });
 };
 
 /**
@@ -136,7 +136,7 @@ exports.get24hrStats = async function get24hrStats(symbol) {
  * @description Get Market List
  * @return {Object} { code, success, data }
  */
-exports.getMarketList = async function getMarketList() {
+exports.getMarketList = async function getMarketList({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -148,5 +148,5 @@ exports.getMarketList = async function getMarketList() {
     ]
   }
   */
-  return await Http().GET('/api/v1/markets');
+  return await Http({key, secret, passphrase}).GET('/api/v1/markets');
 };

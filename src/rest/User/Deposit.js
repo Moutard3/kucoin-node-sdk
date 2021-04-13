@@ -9,7 +9,7 @@ const Http = require('../../lib/http');
  *   - {string} chain - [Optional] The chain name of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20, default is ERC20. This only apply for multi-chain currency, and there is no need for single chain currency.
  * @return {Object} { code, success, data }
  */
-exports.createDepositAddress = async function createDepositAddress(currency, { chain } = {}) {
+exports.createDepositAddress = async function createDepositAddress({key, secret, passphrase}, currency, { chain } = {}) {
   /*
   {
     "code": "200000",     
@@ -20,7 +20,7 @@ exports.createDepositAddress = async function createDepositAddress(currency, { c
     }
   }
   */
-  return await Http().POST('/api/v1/deposit-addresses', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/deposit-addresses', {
     currency,
     chain,
   });
@@ -34,7 +34,7 @@ exports.createDepositAddress = async function createDepositAddress(currency, { c
  *   - {string} chain - [Optional] The chain name of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20, default is ERC20. This only apply for multi-chain currency, and there is no need for single chain currency.
  * @return {Object} { code, success, data }
  */
-exports.getDepositAddress = async function getDepositAddress(currency, { chain } = {}) {
+exports.getDepositAddress = async function getDepositAddress({key, secret, passphrase}, currency, { chain } = {}) {
   /*
   {
     "code": "200000",     
@@ -45,7 +45,7 @@ exports.getDepositAddress = async function getDepositAddress(currency, { chain }
     }
   }
   */
-  return await Http().GET('/api/v1/deposit-addresses', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/deposit-addresses', {
     currency,
     chain,
   });
@@ -103,7 +103,7 @@ exports.getDepositList = async function getDepositList({
     }
   }
   */
-  return await Http().GET('/api/v1/deposits', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/deposits', {
     currency,
     startAt,
     endAt,
@@ -146,7 +146,7 @@ exports.getV1HistoricalDepositsList = async function getV1HistoricalDepositsList
     }
   }
   */
-  return await Http().GET('/api/v1/hist-deposits', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/hist-deposits', {
     currency,
     startAt,
     endAt,

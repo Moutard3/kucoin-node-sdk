@@ -7,7 +7,7 @@ const Http = require('../../lib/http');
  * @param {string} symbol - symbol
  * @return {Object} { code, success, data }
  */
-exports.getMarkPrice = async function getMarkPrice(symbol) {
+exports.getMarkPrice = async function getMarkPrice({key, secret, passphrase}, symbol) {
   /*
   {
     "code": "200000",     
@@ -19,7 +19,7 @@ exports.getMarkPrice = async function getMarkPrice(symbol) {
     }
   }
   */
-  return await Http().GET(`/api/v1/mark-price/${symbol}/current`);
+  return await Http({key, secret, passphrase}).GET(`/api/v1/mark-price/${symbol}/current`);
 };
 
 /**
@@ -27,7 +27,7 @@ exports.getMarkPrice = async function getMarkPrice(symbol) {
  * @description Request via this endpoint to get the configure info of the margin.
  * @return {Object} { code, success, data }
  */
-exports.getMarginConfigurationInfo = async function getMarginConfigurationInfo() {
+exports.getMarginConfigurationInfo = async function getMarginConfigurationInfo({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -39,7 +39,7 @@ exports.getMarginConfigurationInfo = async function getMarginConfigurationInfo()
     }
   }
   */
-  return await Http().GET('/api/v1/margin/config');
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/config');
 };
 
 /**
@@ -47,7 +47,7 @@ exports.getMarginConfigurationInfo = async function getMarginConfigurationInfo()
  * @description Request via this endpoint to get the fiat price of the currencies for the available trading pairs.
  * @return {Object} { code, success, data }
  */
-exports.getMarginAccount = async function getMarginAccount() {
+exports.getMarginAccount = async function getMarginAccount({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -66,7 +66,7 @@ exports.getMarginAccount = async function getMarginAccount() {
     }
   }
   */
-  return await Http().GET('/api/v1/margin/account');
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/account');
 };
 
 /**
@@ -96,7 +96,7 @@ exports.getMarginAccount = async function getMarginAccount() {
  *    - {string} funds - [Optional] The desired amount of quote currency to use
  * @return {Object} { code, success, data }
  */
-exports.postMarginOrder = async function postMarginOrder(params = {}) {
+exports.postMarginOrder = async function postMarginOrder({key, secret, passphrase}, params = {}) {
   /*
   {
     "code": "200000",     
@@ -107,5 +107,5 @@ exports.postMarginOrder = async function postMarginOrder(params = {}) {
     }
   }
   */
-  return await Http().POST('/api/v1/margin/order', { ...params });
+  return await Http({key, secret, passphrase}).POST('/api/v1/margin/order', { ...params });
 };

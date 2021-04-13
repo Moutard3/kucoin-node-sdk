@@ -12,7 +12,7 @@ const Http = require('../../lib/http');
  *   - {string} term - [Optional] Term (Unit: Day). All terms are acceptable if this field is left empty. Please note to separate the terms via comma. For example, 7,14,28.
  * @return {Object} { code, success, data }
  */
-exports.postBorrowOrder = async function postBorrowOrder(params = {}) {
+exports.postBorrowOrder = async function postBorrowOrder({key, secret, passphrase}, params = {}) {
   /*
   {
     "code": "200000",     
@@ -22,7 +22,7 @@ exports.postBorrowOrder = async function postBorrowOrder(params = {}) {
     }
   }
   */
-  return await Http().POST('/api/v1/margin/borrow', { ...params });
+  return await Http({key, secret, passphrase}).POST('/api/v1/margin/borrow', { ...params });
 };
 
 /**
@@ -31,7 +31,7 @@ exports.postBorrowOrder = async function postBorrowOrder(params = {}) {
  * @param {string} orderId - Borrow order ID
  * @return {Object} { code, success, data }
  */
-exports.getBorrowOrder = async function getBorrowOrder(orderId) {
+exports.getBorrowOrder = async function getBorrowOrder({key, secret, passphrase}, orderId) {
   /*
   {
     "code": "200000",     
@@ -54,7 +54,7 @@ exports.getBorrowOrder = async function getBorrowOrder(orderId) {
     }
   }
   */
-  return await Http().GET('/api/v1/margin/borrow', { orderId });
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/borrow', { orderId });
 };
 
 /**
@@ -63,7 +63,7 @@ exports.getBorrowOrder = async function getBorrowOrder(orderId) {
  * @param {string} currency - [Optional] Currency. All currencies will be quried if this field is not required.
  * @return {Object} { code, success, data }
  */
-exports.getRepayRecord = async function getRepayRecord(currency) {
+exports.getRepayRecord = async function getRepayRecord({key, secret, passphrase}, currency) {
   /*
   {
     "code": "200000",     
@@ -89,7 +89,7 @@ exports.getRepayRecord = async function getRepayRecord(currency) {
     }
   }
   */
-  return await Http().GET('/api/v1/margin/borrow/outstanding', { currency });
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/borrow/outstanding', { currency });
 };
 
 /**
@@ -98,7 +98,7 @@ exports.getRepayRecord = async function getRepayRecord(currency) {
  * @param {string} currency - [Optional] Currency. All currencies will be quried if this field is not required.
  * @return {Object} { code, success, data }
  */
-exports.getRepaymentRecord = async function getRepaymentRecord(currency) {
+exports.getRepaymentRecord = async function getRepaymentRecord({key, secret, passphrase}, currency) {
   /*
   {
     "code": "200000",     
@@ -122,7 +122,7 @@ exports.getRepaymentRecord = async function getRepaymentRecord(currency) {
     }
   }
   */
-  return await Http().GET('/api/v1/margin/borrow/repaid', { currency });
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/borrow/repaid', { currency });
 };
 
 /**
@@ -133,7 +133,7 @@ exports.getRepaymentRecord = async function getRepaymentRecord(currency) {
  * @param {number} size - Repayment size
  * @return {Object} { code, success, data }
  */
-exports.repayAll = async function repayAll(currency, sequence, size) {
+exports.repayAll = async function repayAll({key, secret, passphrase}, currency, sequence, size) {
   /*
   {
     "code": "200000",     
@@ -141,7 +141,7 @@ exports.repayAll = async function repayAll(currency, sequence, size) {
     }
   }
   */
-  return await Http().POST('/api/v1/margin/repay/all', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/margin/repay/all', {
     currency,
     sequence,
     size,
@@ -156,7 +156,7 @@ exports.repayAll = async function repayAll(currency, sequence, size) {
  * @param {number} size - Repayment size
  * @return {Object} { code, success, data }
  */
-exports.repaySingle = async function repaySingle(currency, tradeId, size) {
+exports.repaySingle = async function repaySingle({key, secret, passphrase}, currency, tradeId, size) {
   /*
   {
     "code": "200000",     
@@ -164,7 +164,7 @@ exports.repaySingle = async function repaySingle(currency, tradeId, size) {
     }
   }
   */
-  return await Http().POST('/api/v1/margin/repay/single', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/margin/repay/single', {
     currency,
     tradeId,
     size,
@@ -180,7 +180,7 @@ exports.repaySingle = async function repaySingle(currency, tradeId, size) {
  * @param {number} term - Term (Unit: Day)
  * @return {Object} { code, success, data }
  */
-exports.postLendOrder = async function postLendOrder(currency, size, dailyIntRate, term) {
+exports.postLendOrder = async function postLendOrder({key, secret, passphrase}, currency, size, dailyIntRate, term) {
   /*
   {
     "code": "200000",     
@@ -189,7 +189,7 @@ exports.postLendOrder = async function postLendOrder(currency, size, dailyIntRat
     }
   }
   */
-  return await Http().POST('/api/v1/margin/lend', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/margin/lend', {
     currency,
     size,
     dailyIntRate,
@@ -203,7 +203,7 @@ exports.postLendOrder = async function postLendOrder(currency, size, dailyIntRat
  * @param {string} orderId - Lend order ID
  * @return {Object} { code, success, data }
  */
-exports.cancelLendOrder = async function cancelLendOrder(orderId) {
+exports.cancelLendOrder = async function cancelLendOrder({key, secret, passphrase}, orderId) {
   /*
   {
     "code": "200000",     
@@ -211,7 +211,7 @@ exports.cancelLendOrder = async function cancelLendOrder(orderId) {
     }
   }
   */
-  return await Http().DEL(`/api/v1/margin/lend/${orderId}`);
+  return await Http({key, secret, passphrase}).DEL(`/api/v1/margin/lend/${orderId}`);
 };
 
 /**
@@ -224,7 +224,7 @@ exports.cancelLendOrder = async function cancelLendOrder(orderId) {
  * @param {number} term - Term (Unit: Day). Required when isEnable is true.
  * @return {Object} { code, success, data }
  */
-exports.setAutoLend = async function setAutoLend(currency, isEnable, retainSize, dailyIntRate, term) {
+exports.setAutoLend = async function setAutoLend({key, secret, passphrase}, currency, isEnable, retainSize, dailyIntRate, term) {
   /*
   {
     "code": "200000",     
@@ -232,7 +232,7 @@ exports.setAutoLend = async function setAutoLend(currency, isEnable, retainSize,
     }
   }
   */
-  return await Http().POST('/api/v1/margin/toggle-auto-lend', {
+  return await Http({key, secret, passphrase}).POST('/api/v1/margin/toggle-auto-lend', {
     currency,
     isEnable,
     retainSize,
@@ -250,7 +250,7 @@ exports.setAutoLend = async function setAutoLend(currency, isEnable, retainSize,
  *   - {number} pageSize
  * @return {Object} { code, success, data }
  */
-exports.getActiveOrder = async function getActiveOrder(currency, { currentPage, pageSize } = {}) {
+exports.getActiveOrder = async function getActiveOrder({key, secret, passphrase}, currency, { currentPage, pageSize } = {}) {
   /*
   {
     "code": "200000",     
@@ -271,7 +271,7 @@ exports.getActiveOrder = async function getActiveOrder(currency, { currentPage, 
     }
   }
   */
-  return await Http().GET('/api/v1/margin/lend/active', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/lend/active', {
     currency,
     currentPage,
     pageSize,
@@ -287,7 +287,7 @@ exports.getActiveOrder = async function getActiveOrder(currency, { currentPage, 
  *   - {number} pageSize
  * @return {Object} { code, success, data }
  */
-exports.getLentHistory = async function getLentHistory(currency, { currentPage, pageSize } = {}) {
+exports.getLentHistory = async function getLentHistory({key, secret, passphrase}, currency, { currentPage, pageSize } = {}) {
   /*
   {
     "code": "200000",     
@@ -309,7 +309,7 @@ exports.getLentHistory = async function getLentHistory(currency, { currentPage, 
     }
   }
   */
-  return await Http().GET('/api/v1/margin/lend/done', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/lend/done', {
     currency,
     currentPage,
     pageSize,
@@ -325,7 +325,7 @@ exports.getLentHistory = async function getLentHistory(currency, { currentPage, 
  *   - {number} pageSize
  * @return {Object} { code, success, data }
  */
-exports.getActiveLendOrdersList = async function getActiveLendOrdersList(currency, { currentPage, pageSize } = {}) {
+exports.getActiveLendOrdersList = async function getActiveLendOrdersList({key, secret, passphrase}, currency, { currentPage, pageSize } = {}) {
   /*
   {
     "code": "200000",     
@@ -347,7 +347,7 @@ exports.getActiveLendOrdersList = async function getActiveLendOrdersList(currenc
     }
   }
   */
-  return await Http().GET('/api/v1/margin/lend/trade/unsettled', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/lend/trade/unsettled', {
     currency,
     currentPage,
     pageSize,
@@ -363,7 +363,7 @@ exports.getActiveLendOrdersList = async function getActiveLendOrdersList(currenc
  *   - {number} pageSize
  * @return {Object} { code, success, data }
  */
-exports.getSettledLendOrderHistory = async function getSettledLendOrderHistory(currency, { currentPage, pageSize } = {}) {
+exports.getSettledLendOrderHistory = async function getSettledLendOrderHistory({key, secret, passphrase}, currency, { currentPage, pageSize } = {}) {
   /*
   {
     "code": "200000",     
@@ -386,7 +386,7 @@ exports.getSettledLendOrderHistory = async function getSettledLendOrderHistory(c
     }
   }
   */
-  return await Http().GET('/api/v1/margin/lend/trade/settled', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/lend/trade/settled', {
     currency,
     currentPage,
     pageSize,
@@ -399,7 +399,7 @@ exports.getSettledLendOrderHistory = async function getSettledLendOrderHistory(c
  * @param {string} currency - [Optional] Currency
  * @return {Object} { code, success, data }
  */
-exports.getAccountLendRecord = async function getAccountLendRecord(currency) {
+exports.getAccountLendRecord = async function getAccountLendRecord({key, secret, passphrase}, currency) {
   /*
   {
     "code": "200000",     
@@ -413,7 +413,7 @@ exports.getAccountLendRecord = async function getAccountLendRecord(currency) {
     }]
   }
   */
-  return await Http().GET('/api/v1/margin/lend/assets', { currency });
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/lend/assets', { currency });
 };
 
 /**
@@ -423,7 +423,7 @@ exports.getAccountLendRecord = async function getAccountLendRecord(currency) {
  * @param {number} term - [Optional] Term (Unit: Day)
  * @return {Object} { code, success, data }
  */
-exports.getLendingMarketData = async function getLendingMarketData(currency, term) {
+exports.getLendingMarketData = async function getLendingMarketData({key, secret, passphrase}, currency, term) {
   /*
   {
     "code": "200000",     
@@ -434,7 +434,7 @@ exports.getLendingMarketData = async function getLendingMarketData(currency, ter
     }]
   }
   */
-  return await Http().GET('/api/v1/margin/market', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/market', {
     currency,
     term,
   });
@@ -446,7 +446,7 @@ exports.getLendingMarketData = async function getLendingMarketData(currency, ter
  * @param {string} currency - Currency
  * @return {Object} { code, success, data }
  */
-exports.getMarginFillsTradeData = async function getMarginFillsTradeData(currency) {
+exports.getMarginFillsTradeData = async function getMarginFillsTradeData({key, secret, passphrase}, currency) {
   /*
   {
     "code": "200000",     
@@ -460,7 +460,7 @@ exports.getMarginFillsTradeData = async function getMarginFillsTradeData(currenc
     }]
   }
   */
-  return await Http().GET('/api/v1/margin/trade/last', {
+  return await Http({key, secret, passphrase}).GET('/api/v1/margin/trade/last', {
     currency,
   });
 };

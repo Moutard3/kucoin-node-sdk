@@ -6,7 +6,7 @@ const Http = require('../../lib/http');
  * @description Get Currencies. Request via this endpoint to get the currency list.
  * @return {Object} { code, success, data }
  */
-exports.getCurrencies = async function getCurrencies() {
+exports.getCurrencies = async function getCurrencies({key, secret, passphrase}) {
   /*
   {
     "code": "200000",     
@@ -38,7 +38,7 @@ exports.getCurrencies = async function getCurrencies() {
     }]
   }
   */
-  return await Http().GET('/api/v1/currencies');
+  return await Http({key, secret, passphrase}).GET('/api/v1/currencies');
 };
 
 /**
@@ -48,7 +48,7 @@ exports.getCurrencies = async function getCurrencies() {
  * @param {string} chain - [Optional] Support for querying the chain of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20. This only apply for multi-chain currency, and there is no need for single chain currency.
  * @return {Object} { code, success, data }
  */
-exports.getCurrencyDetail = async function getCurrencyDetail(currency, chain) {
+exports.getCurrencyDetail = async function getCurrencyDetail({key, secret, passphrase}, currency, chain) {
   /*
   {
     "code": "200000",     
@@ -66,7 +66,7 @@ exports.getCurrencyDetail = async function getCurrencyDetail(currency, chain) {
     }
   }
   */
-  return await Http().GET(`/api/v1/currencies/${currency}`, { chain });
+  return await Http({key, secret, passphrase}).GET(`/api/v1/currencies/${currency}`, { chain });
 };
 
 /**
@@ -77,7 +77,7 @@ exports.getCurrencyDetail = async function getCurrencyDetail(currency, chain) {
  *   - {string} currencies - [Optional] Comma-separated cryptocurrencies to be converted into fiat, e.g.: BTC,ETH, etc. Default to return the fiat price of all currencies.
  * @return {Object} { code, success, data }
  */
-exports.getFiatPrice = async function getFiatPrice(params = {}) {
+exports.getFiatPrice = async function getFiatPrice({key, secret, passphrase}, params = {}) {
   /*
   {
     "code": "200000",     
@@ -89,5 +89,5 @@ exports.getFiatPrice = async function getFiatPrice(params = {}) {
     }
   }
   */
-  return await Http().GET('/api/v1/prices', { ...params });
+  return await Http({key, secret, passphrase}).GET('/api/v1/prices', { ...params });
 };
